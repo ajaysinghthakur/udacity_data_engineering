@@ -45,6 +45,8 @@ CREATE TABLE IF NOT EXISTS songs
 )
 """)
 
+#https://stackoverflow.com/questions/1196415/what-datatype-to-use-when-storing-latitude-and-longitude-data-in-sql-databases
+# best practise to save latitude and longitude
 artist_table_create = ("""
 CREATE TABLE IF NOT EXISTS artists
 (
@@ -72,24 +74,40 @@ CREATE TABLE IF NOT EXISTS time
 # INSERT RECORDS
 
 songplay_table_insert = ("""
-
+INSERT INTO songplays (start_time, user_id, level, song_id, artist_id, session_id, location, user_agent)
+VALUES (%s, %s, %s, %s, %s, %s, %s, %s);
 """)
-
+# duplicate key value violates unique constraint "users_pkey"
 user_table_insert = ("""
+INSERT INTO users (user_id, first_name, last_name, gender, level)
+values (%s, %s, %s, %s, %s)
+ON CONFLICT (user_id) DO UPDATE SET level = EXCLUDED.level
 """)
 
 song_table_insert = ("""
+INSERT INTO songs (song_id, title, artist_id, year, duration)
+values (%s, %s, %s, %s, %s)
 """)
 
 artist_table_insert = ("""
+INSERT INTO artists (artist_id, name, location, latitude, longitude)
+values (%s, %s, %s, %s, %s)
 """)
 
 time_table_insert = ("""
+INSERT INTO time (start_time, hour, day, week, month, year, weekday)
+values (%s, %s, %s, %s, %s, %s, %s);
 """)
 
 # FIND SONGS
-
+# INNER JOIN = JOIN
 song_select = ("""
+SELECT song_id, artists.artist_id
+FROM songs
+         INNER JOIN artists ON artists.artist_id = songs.artist_id
+WHERE title = %s
+  AND name = %s
+  AND duration = %s
 """)
 
 # QUERY LISTS
