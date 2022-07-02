@@ -3,3 +3,4 @@
 .idea/
 sparkify_postgress/.ipynb_checkpoints/
 sparkify_postgress/__pycache__/
+*.pyc
