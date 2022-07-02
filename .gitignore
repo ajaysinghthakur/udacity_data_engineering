@@ -1,3 +1,5 @@
 #ignore Mac folders
 .DS_Store
 .idea/
+sparkify_postgress/.ipynb_checkpoints/
+sparkify_postgress/__pycache__/
