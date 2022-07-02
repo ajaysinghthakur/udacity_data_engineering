@@ -1,7 +1,9 @@
+import json
 import os
 import glob
 import psycopg2
 import pandas as pd
+from pyparsing import line
 from sql_queries import *
 
 
@@ -25,8 +27,7 @@ song_files = get_files("./data/song_data/")
 filepath = song_files[0]
 
 print(filepath)
-
-df = pd.read_json(filepath, lines= True)
+df = pd.DataFrame([pd.read_json(filepath, typ='series', convert_dates=False)])
 df.head()
 
 song_data = df[['song_id', 'title', 'artist_id', 'year', 'duration']].values[0]
