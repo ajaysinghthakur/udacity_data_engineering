@@ -40,12 +40,12 @@ CREATE TABLE IF NOT EXISTS songs
     song_id   VARCHAR PRIMARY KEY,
     title     VARCHAR,
     artist_id VARCHAR,
-    year      INT CHECK (year >= 0),
+    year      INT,
     duration  FLOAT
 )
 """)
 
-#https://stackoverflow.com/questions/1196415/what-datatype-to-use-when-storing-latitude-and-longitude-data-in-sql-databases
+# https://stackoverflow.com/questions/1196415/what-datatype-to-use-when-storing-latitude-and-longitude-data-in-sql-databases
 # best practise to save latitude and longitude
 artist_table_create = ("""
 CREATE TABLE IF NOT EXISTS artists
@@ -93,6 +93,7 @@ ON CONFLICT (song_id) DO NOTHING
 artist_table_insert = ("""
 INSERT INTO artists (artist_id, name, location, latitude, longitude)
 values (%s, %s, %s, %s, %s)
+ON CONFLICT (artist_id) DO NOTHING
 """)
 
 time_table_insert = ("""
