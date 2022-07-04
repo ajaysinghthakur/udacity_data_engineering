@@ -54,7 +54,7 @@ And make similar changes in ```etl.py``` in line number **92**
 ```
 conn = psycopg2.connect("host=127.0.0.1 dbname=sparkifydb user=student password=student")
 ```
-### **Now after setup**
+#### **Now after setup**
 1- Run ``create_tables.py``
 ```
 python create_tables.py
