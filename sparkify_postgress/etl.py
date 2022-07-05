@@ -6,13 +6,15 @@ from sql_queries import *
 
 
 def process_song_file(cur, filepath):
-    # reading file
-    # print("reading filepath:", filepath)
-    # open song file
-    # encountered json read error, after changing python version, so changing the code
-    df = pd.DataFrame([pd.read_json(filepath, typ='series', convert_dates=False)])
 
-    # print(df)
+    """
+    Process songs files and insert records into the Postgres database.
+    :param cur: cursor reference
+    :param filepath: complete file path for the file to load
+    """
+
+    # open song file, using this as json formatted and giving error
+    df = pd.DataFrame([pd.read_json(filepath, typ='series', convert_dates=False)])
 
     # insert song record
     song_data = df[['song_id', 'title', 'artist_id', 'year', 'duration']].values[0]
@@ -24,6 +26,13 @@ def process_song_file(cur, filepath):
 
 
 def process_log_file(cur, filepath):
+
+    """
+    Process Event log files and insert records into the Postgres database.
+    :param cur: cursor reference
+    :param filepath: complete file path for the file to load
+    """
+
     # open log file
     print("reading log file:", filepath)
     df = pd.read_json(filepath, lines=True)
@@ -70,6 +79,14 @@ def process_log_file(cur, filepath):
 
 
 def process_data(cur, conn, filepath, func):
+    """
+    Driver function to load data from songs and event log files into Postgres database.
+    :param cur: a database cursor reference
+    :param conn: database connection reference
+    :param filepath: parent directory where the files exists
+    :param func: function to call
+    """
+    
     # get all files matching extension from directory
     all_files = []
     for root, dirs, files in os.walk(filepath):
@@ -89,7 +106,11 @@ def process_data(cur, conn, filepath, func):
 
 
 def main():
-    conn = psycopg2.connect("host=127.0.0.1 dbname=sparkifydb user=student password=student")
+    """
+    Driver function for loading songs and log data into Postgres database
+    """
+
+    conn = psycopg2.connect("host=127.0.0.1 dbname=sparkifydb user=ajaysinghthakur password=ajay")##psycopg2.connect("host=127.0.0.1 dbname=sparkifydb user=student password=student")
     cur = conn.cursor()
 
     process_data(cur, conn, filepath='./data/song_data', func=process_song_file)
