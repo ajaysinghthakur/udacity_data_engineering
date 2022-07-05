@@ -9,6 +9,7 @@ def process_song_file(cur, filepath):
 
     """
     Process songs files and insert records into the Postgres database.
+    reflected on song_table,  artist_table
     :param cur: cursor reference
     :param filepath: complete file path for the file to load
     """
@@ -29,6 +30,7 @@ def process_log_file(cur, filepath):
 
     """
     Process Event log files and insert records into the Postgres database.
+    reflected on time_table, user_table, song_play_table
     :param cur: cursor reference
     :param filepath: complete file path for the file to load
     """
@@ -86,7 +88,7 @@ def process_data(cur, conn, filepath, func):
     :param filepath: parent directory where the files exists
     :param func: function to call
     """
-    
+
     # get all files matching extension from directory
     all_files = []
     for root, dirs, files in os.walk(filepath):
