@@ -4,15 +4,18 @@ from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
 ########################################
 # Update connection string information #
 ########################################
-host = "azurepostgressql.postgres.database.azure.com"
-user = "udacity_postgres@azurepostgressql"
-password = "ajay@12345"
-
+host = ""
+port= "5432"
+user = ""
+password = ""
 # Create a new DB
 sslmode = "require"
-dbname = "postgres"
+dbname = "postgres" # this is default DB
+
+
 # connection
-conn_string = "host={0} user={1} dbname={2} password={3} sslmode={4}".format(host, user, dbname, password, sslmode)
+conn_string = "host={0} port={1} dbname={2} user={3} password={4} sslmode={5}".format(host, port, dbname, user, password, sslmode)
+print(conn_string)
 conn = psycopg2.connect(conn_string)
 conn.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT);
 print("Connection established")
@@ -27,7 +30,8 @@ conn.close()
 
 # Reconnect to the new DB
 dbname = "udacityproject"
-conn_string = "host={0} user={1} dbname={2} password={3} sslmode={4}".format(host, user, dbname, password, sslmode)
+conn_string = "host={0} port={1} dbname={2} user={3} password={4} sslmode={5}".format(host, port, dbname, user, password, sslmode)
+print(conn_string)
 conn = psycopg2.connect(conn_string)
 print("Connection established")
 cursor = conn.cursor()
