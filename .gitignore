@@ -4,3 +4,4 @@
 sparkify_postgress/.ipynb_checkpoints/
 sparkify_postgress/__pycache__/
 *.pyc
+divvy_data_warehouse_azure/data/.ipynb_checkpoints/
