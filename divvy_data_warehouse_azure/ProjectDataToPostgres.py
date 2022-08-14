@@ -4,33 +4,33 @@ from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
 ########################################
 # Update connection string information #
 ########################################
-host = "postgressserver.postgres.database.azure.com"
+host = ""
 port= "5432"
-user = "ajaypostgress"
-password = "udactiy@12345"
+user = "ajaysinghthakur"
+password = "ajay12345"
 # Create a new DB
-sslmode = "require"
+# sslmode = "require"
 dbname = "postgres" # this is default DB
 
 
 # connection
-# conn_string = "host={0} port={1} dbname={2} user={3} password={4} sslmode={5}".format(host, port, dbname, user, password, sslmode)
-# print(conn_string)
-# conn = psycopg2.connect(conn_string)
-# conn.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT);
-# print("Connection established")
+conn_string = "host={0} port={1} dbname={2} user={3} password={4}".format(host, port, dbname, user, password)
+print(conn_string)
+conn = psycopg2.connect(conn_string)
+conn.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT);
+print("Connection established")
 
-# cursor = conn.cursor()
-# cursor.execute('DROP DATABASE IF EXISTS udacityproject')
-# cursor.execute("CREATE DATABASE udacityproject")
-# # Clean up initial connection
-# conn.commit()
-# cursor.close()
-# conn.close()
+cursor = conn.cursor()
+cursor.execute('DROP DATABASE IF EXISTS udacityproject')
+cursor.execute("CREATE DATABASE udacityproject")
+# Clean up initial connection
+conn.commit()
+cursor.close()
+conn.close()
 
 # Reconnect to the new DB
 dbname = "udacityproject"
-conn_string = "host=postgressserver.postgres.database.azure.com port=5432 dbname=udacityproject  user=ajaypostgress password=udacity@12345  sslmode=require"#"host={0} port={1} dbname={2} user={3} password={4} sslmode={5}".format(host, port, dbname, user, password, sslmode)
+conn_string = "host={0} port={1} dbname={2} user={3} password={4}".format(host, port, dbname, user, password)
 print(conn_string)
 conn = psycopg2.connect(conn_string)
 print("Connection established")
@@ -53,29 +53,29 @@ def populate_table(c, filename, tablename):
         cursor.close()
     print("Finished populating {0}".format(tablename))
 
-# # Create Rider table
-# table = "rider"
-# filename = './data/riders.csv'
-# create = "CREATE TABLE rider (rider_id INTEGER PRIMARY KEY, first VARCHAR(50), last VARCHAR(50), address VARCHAR(100), birthday DATE, account_start_date DATE, account_end_date DATE, is_member BOOLEAN);"
+# Create Rider table
+table = "rider"
+filename = './data/riders.csv'
+create = "CREATE TABLE rider (rider_id INTEGER PRIMARY KEY, first VARCHAR(50), last VARCHAR(50), address VARCHAR(100), birthday VARCHAR(50), account_start_date VARCHAR(50), account_end_date VARCHAR(50), is_member BOOLEAN);"
 
-# drop_recreate(cursor, table, create)
-# populate_table(cursor, filename, table)
+drop_recreate(cursor, table, create)
+populate_table(cursor, filename, table)
 
-# # Create Payment table
-# table = "payment"
-# filename = './data/payments.csv'
-# create = "CREATE TABLE payment (payment_id INTEGER PRIMARY KEY, date DATE, amount MONEY, rider_id INTEGER);"
+# Create Payment table
+table = "payment"
+filename = './data/payments.csv'
+create = "CREATE TABLE payment (payment_id INTEGER PRIMARY KEY, date VARCHAR(50), amount MONEY, rider_id INTEGER);"
 
-# drop_recreate(cursor, table, create)
-# populate_table(cursor, filename, table)
+drop_recreate(cursor, table, create)
+populate_table(cursor, filename, table)
 
-# # Create Station table
-# table = "station"
-# filename = './data/stations.csv'
-# create = "CREATE TABLE station (station_id VARCHAR(50) PRIMARY KEY, name VARCHAR(75), latitude FLOAT, longitude FLOAT);"
+# Create Station table
+table = "station"
+filename = './data/stations.csv'
+create = "CREATE TABLE station (station_id VARCHAR(50) PRIMARY KEY, name VARCHAR(75), latitude FLOAT, longitude FLOAT);"
 
-# drop_recreate(cursor, table, create)
-# populate_table(cursor, filename, table)
+drop_recreate(cursor, table, create)
+populate_table(cursor, filename, table)
 
 # Create Trip table
 table = "trip"
